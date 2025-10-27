@@ -23,6 +23,9 @@ WORKDIR /var/www
 # Copia los archivos del proyecto al contenedor
 COPY . .
 
+# Copia el archivo de entorno de ejemplo como .env si no existe
+RUN if [ ! -f .env ]; then cp .env.example .env; fi
+
 # Instala dependencias de Composer
 RUN composer install --no-dev --optimize-autoloader
 
@@ -35,4 +38,3 @@ USER www-data
 
 # Comando por defecto
 CMD ["php-fpm"]
- 
